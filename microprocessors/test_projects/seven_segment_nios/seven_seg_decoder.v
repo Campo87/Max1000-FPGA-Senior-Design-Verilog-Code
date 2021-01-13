@@ -39,7 +39,7 @@
 module seven_seg_decoder(out, in);
   output reg [7:0] out;
   input wire [3:0] in;
-	
+);
   // Layout of bits are in order A-G, LSB is DP
   //                   ABCD_EFG[DP]
   parameter dp    = 8'b0000_0001;
@@ -60,24 +60,24 @@ module seven_seg_decoder(out, in);
   parameter e     = 8'b1001_1110;
   parameter f     = 8'b1000_1110;
 
-  always @(in) begin
+  always @(*) begin
     case (in)
-      4'd0  : out = zero;
-      4'd1  : out = one;
-      4'd2  : out = two;
-      4'd3  : out = three;
-      4'd4  : out = four;
-      4'd5  : out = five;
-      4'd6  : out = six;
-      4'd7  : out = seven;
-      4'd8  : out = eight;
-      4'd9  : out = nine;
-      4'd10 : out = a;
-      4'd11 : out = b;
-      4'd12 : out = c;
-      4'd13 : out = d;
-      4'd14 : out = e;
-      4'd15 : out = f;
+      4'h0 : out = zero;
+      4'h1 : out = one;
+      4'h2 : out = two;
+      4'h3 : out = three;
+      4'h4 : out = four;
+      4'h5 : out = five;
+      4'h6 : out = six;
+      4'h7 : out = seven;
+      4'h8 : out = eight;
+      4'h9 : out = nine;
+      4'ha : out = a;
+      4'hb : out = b;
+      4'hc : out = c;
+      4'hd : out = d;
+      4'he : out = e;
+      4'hf : out = f;
 		default : out = dp;
       endcase
   end 

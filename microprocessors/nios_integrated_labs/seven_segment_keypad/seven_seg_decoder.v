@@ -28,14 +28,14 @@
 //      DP G F E D C B A  GND
 // Pin  7  3 2 4 5 8 9 10 1&6
 ///////////////////////////////////////////////////////////////////////////////
-// out[0]  - A   | out[7]	Output	PIN_H13
-// out[1]  - B   | out[6]	Output	PIN_E3
-// out[2]  - C   | out[5]	Output	PIN_F1
-// out[3]  - D   | out[4]	Output	PIN_E4
-// out[4]  - E   | out[3]	Output	PIN_H8
-// out[5]  - F   | out[2]	Output	PIN_H10
-// out[6]  - G   | out[1]	Output	PIN_J10
-// out[7]  - DP  | out[0]	Output	PIN_K12
+// out[0]  - A   | out[7]  Output  PIN_H13
+// out[1]  - B   | out[6]  Output  PIN_E3
+// out[2]  - C   | out[5]  Output  PIN_F1
+// out[3]  - D   | out[4]  Output  PIN_E4
+// out[4]  - E   | out[3]  Output  PIN_H8
+// out[5]  - F   | out[2]  Output  PIN_H10
+// out[6]  - G   | out[1]  Output  PIN_J10
+// out[7]  - DP  | out[0]  Output  PIN_K12
 ///////////////////////////////////////////////////////////////////////////////
 module seven_seg_decoder(out, in);
   output reg [7:0] out;
@@ -44,7 +44,7 @@ module seven_seg_decoder(out, in);
 // Instead of running of a clock, this aways block waits for and input
 // from the keypad. Thus making this module asynchronous. 
 
-  always @(in) begin
+  always @(*) begin
     case (in)
       // Layout of bits, MSB is DP, then decending G-A
       //              [DP]GFE DCBA
@@ -64,7 +64,7 @@ module seven_seg_decoder(out, in);
       4'hD :    out = 8'b0101_1110;
       4'hE :    out = 8'b0111_1001;
       4'hF :    out = 8'b0111_0001;
-  	  default : out = 8'b1000_0000;
+      default : out = 8'b1000_0000;
     endcase
   end 
 endmodule

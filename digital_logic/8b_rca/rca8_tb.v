@@ -11,7 +11,7 @@ module rca8_tb;
     initial begin
         repeat (10) begin
             a = $random; b = $random; cin = 0;
-            $monitor("%b_%b + %b_%b = %b_%b_%b", a[7:4], a[3:0], b[7:4], b[3:0], cout, sum[7:4], sum[3:0]);
+            $monitor("%b + %b = %b%b", a, b, cout, sum);
             #100;
         end
     end

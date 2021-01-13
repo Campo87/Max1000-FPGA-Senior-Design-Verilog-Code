@@ -1,27 +1,32 @@
 // Stepdown 1MHz input clock to 1633Hz
-/*
-AUTHOR: JAMES STARKS
-DATE: 4/17/2020
-FROM: TXST SENIOR DESIGN FALL 2019-SPRING2020
-FOR: TEXAS STATE UNIVERSITY STUDENT AND INSTRUCTOR USE
-*/
-module stepdown_1633Hz(outclk, inclk);
-    output reg outclk;
-    input wire inclk;
-
-	// div = 1E6/60/2
-    integer div = 305;
-    // LOG2(div), and round up to get number of bits required for count.
-    reg [8:0] count;
-
-    initial begin count = 9'b0; outclk = 0; end
-    // Note, this always block only activates on the posedge this is why
-    // when calculating the div we get a factor of 0.5
-    always@(posedge inclk) begin
-        count = count + 1;
-        if (count == div) begin
-            outclk = ~outclk;
-            count = 0;
+// 
+// AUTHOR: JAMES STARKS
+// DATE: 4/17/2020
+// FROM: TXST SENIOR DESIGN FALL 2019-SPRING2020
+// FOR: TEXAS STATE UNIVERSITY STUDENT AND INSTRUCTOR USE
+// // div = input_clk_freq / (2 * output_clk_freq)
+//
+module stepdown_1633Hz(
+    output  reg     clk_1633_out,
+    input   wire    clk_1m_in,
+    input   wire    reset_b
+);
+    parameter div = 306;
+    
+    reg[8:0] counter_ff;
+    
+    always@(posedge clk_1m_in or negedge reset_b)
+    begin
+        if(reset_b == 1'b0) begin
+            counter_ff <= 9'd0;
+            clk_1633_out <= 1'b0;
         end
+        else if(counter_ff > div) begin
+            counter_ff <= 9'd0;
+            clk_1633_out <= ~clk_1633_out;
+        end
+        else 
+            counter_ff <= counter_ff + 9'd1;
     end
+    
 endmodule

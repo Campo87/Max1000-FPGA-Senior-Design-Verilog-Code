@@ -5,7 +5,7 @@ int main()
 
 3
 {
-	unsigned char count = 0x0;
+	unsigned char count = 0;
 	unsigned int delay;
 
 	while(1)

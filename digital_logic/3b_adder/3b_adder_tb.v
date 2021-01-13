@@ -9,7 +9,7 @@ module adder_tb;
     initial begin
         repeat(10) begin
             a=$random;	b=$random;
-            $monitor("%b + %b = %b_%b", a , b, cout, s);
+            $monitor("%b + %b = %b%b", a , b, cout, s);
             #100;
         end
     end

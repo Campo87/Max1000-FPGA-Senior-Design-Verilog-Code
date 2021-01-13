@@ -7,29 +7,29 @@ DATE: 3/3/2020
 FROM: TXST SENIOR DESIGN FALL 2019-SPRING 2020
 FOR: TEXAS STATE UNIVERSITY STUDENT AND INSTRUCTIOR USE
 DESCRIPTION: This module generates a PWM signal based on the 
-			 input set_speed value. This is an 8bit value
-			 with 256 possible values. To calculate the duty
-			 of the PWM generated, divide set_speed/256.
+             input set_speed value. This is an 8bit value
+             with 256 possible values. To calculate the duty
+             of the PWM generated, divide set_speed/256.
 */
-module speed_controller(motor_driver_en, set_speed, clk);
-    // PWM signal for the motor driver enable pin
-    output reg motor_driver_en;
-    // Speed value provided by NIOS in the software layer
-    input wire [7:0] set_speed;
-    // Base input clock value to modifity
-    input wire clk;
-
+module speed_controller()  
+    output reg motor_driver_en, // PWM signal for the motor driver enable pin
+    input wire [7:0] set_speed, // Speed value provided by NIOS in the software layer
+    input wire clk,             // Base input clock value to modifity
+    input wire reset_b
+);
+    
     reg [7:0] counter;
-
-    initial begin
-        counter = 8'b0;
-        motor_driver_en = 1'b0;
-    end 
-
-    always@(posedge clk) begin
-        // Check to see if counter is higher than set_speed
-        motor_driver_en = (counter > set_speed) ? 0 : 1;
-        counter = counter + 1;
+    
+    always@(posedge clk or negedge reset_b) begin
+        if(reset_b == 1'b0) begin
+            counter <= 8'b0;
+            motor_driver_en <= 1'b0;
+        end
+        else 
+        begin
+            // Check to see if counter is higher than set_speed
+            motor_driver_en <= (counter > set_speed) ? 1'b0 : 1'b1;
+            counter <= counter + 8'd1;
+        end
     end
 endmodule
-

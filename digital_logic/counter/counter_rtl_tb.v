@@ -3,7 +3,7 @@ module counter_tb();
     reg clk, rst;
     wire [3:0] out;
 
-    counter dut(out, rst, clk);
+    counter_rtl dut(out, rst, clk);
 
     initial begin
         clk = 0;
@@ -12,8 +12,9 @@ module counter_tb();
 
     initial begin
         $monitor("rst:%b\tclk:%b\tout:%b\ttime:%d", rst, clk, out, $time);
-        rst = 1;
-        #10 rst = 0;
+        rst = 0;
+        #10 rst = 1;
+        #30 $finish();
     end
 
 
